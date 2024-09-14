@@ -1,24 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
+import './index.css';
 import './App.css';
-
+import TableComponent from './components/table/table.component';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+		<section className='bg-blue-700 h-10 flex'>
+		<h5 className="text-white flex items-center">LSEG chatbot</h5>
+		</section>
+			<p>Welcome to LSEG.Im here to help you.</p>
+			<p>Choose a stock from below</p>
+		<section>
+      	<TableComponent></TableComponent>
+		</section>
     </div>
   );
 }
