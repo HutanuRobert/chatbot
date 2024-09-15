@@ -1,7 +1,5 @@
- {
- "stocks": [
+export const stocks = [
     {
-		"id": 0,
         "code": "LSE",
         "stockExchange": "London Stock Exchange",
         "topStocks": [
@@ -33,7 +31,6 @@
         ]
     },
     {
-		"id": 1,
         "code": "NYSE",
         "stockExchange": "New York Stock Exchange",
         "topStocks": [
@@ -65,7 +62,6 @@
         ]
     },
     {
-		"id": 2,
         "code": "NASDAQ",
         "stockExchange": "Nasdaq",
         "topStocks": [
@@ -94,7 +90,6 @@
                 "stockName": "Alphabet Inc.",
                 "price": 141.91
             }
-        ]
+        ]		
     }
-]
-}
+];
