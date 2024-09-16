@@ -6,10 +6,12 @@ import { useState } from 'react';
 import StocksComponent from './components/stocks/stocks';
 import { Stock } from './types/stock';
 import StockComponent from './components/stock/stock';
+import { useTableContext } from './components/context/context';
 
 
 
 function App() {
+	const { tables, addTable, updateStockExchange, updateStock, goBack } = useTableContext();
 	const stockExchanges = GetStockExchanges().data;
 	const [stocks, setStocks] = useState<Stock[] | null>(null);
 	const [stockExchangeName, setStockExchangeName] = useState<string | null>(null);
@@ -18,58 +20,72 @@ function App() {
 	const [isClickable, setIsClickable] = useState<boolean>(true);
 	const [tableComponents, setTableComponents] = useState<number[]>([0]);
   
-  const onStockExchangeSelect = (code: string, tableKey: number) => {
-    setStocks(stockExchanges?.find((el) => el.code === code)?.topStocks || null);
-	setStockExchangeName(stockExchanges?.find((el) => el.code === code)?.stockExchange || null);
-	//setIsClickable(false);
+   const onStockExchangeSelect = (code: string, tableKey: number) => {
+    const stockExchange = stockExchanges?.find((el) => el.code === code);
+    updateStockExchange(tableKey, stockExchange?.stockExchange || '', stockExchange?.topStocks || null);
   };
 
-  const onStockSelect = (stock: Stock) => {
-	setStock(stocks?.find((el) => el.code === stock.code) || null);
-	setSelectedStock(stock.stockName);
-	//setIsClickable(false);
-  }
+  // Stock select handler
+  const onStockSelect = (stock: Stock, tableKey: number) => {
+    updateStock(tableKey, stock);
+  };
 
-  const onMainMenuItemSelect = () => {
-	setStocks(null);
-	setStock(null);
-	setTableComponents((prev) => [...prev, prev.length]); 
-}
+ const onGoBackMenuItemSelect = (tableKey: number) => {
+    goBack(tableKey);
+  };
 
-  const onGoBackMenuItemSelect = () => {
-	setStocks(null);
-  }
-
-  
-
-	
-	
   return (	
     <div className="App">
-		<section className='bg-blue-700 h-10 flex'>
-		<h5 className="text-white flex items-center">LSEG chatbot</h5>
-		</section>
-			<p>Welcome to LSEG.Im here to help you.</p>
-		<section className="flex flex-col">
-   		{tableComponents.map((tableKey) => (
-					<div key={tableKey}>
-						<TableComponent
-							onStockExchange={(code) => onStockExchangeSelect(code, tableKey)}
-							stockExchanges={stockExchanges}
-							isClickable={isClickable}
-						/>
-					</div>
-				))}
-		{stockExchangeName && <h3 className="flex justify-end">{stockExchangeName}</h3>}
-		</section>
-		<section>
-		{stockExchangeName &&<StocksComponent onMainMenuSelect={onMainMenuItemSelect} onGoBackSelect={onGoBackMenuItemSelect} onStockSelect={onStockSelect} stocks={stocks} isClickable={isClickable}></StocksComponent>}
-		{selectedStock && <h3 className="flex justify-end">{selectedStock}</h3>}
-		</section>
-		<section>
-		{stock &&  <StockComponent onMainMenuSelect={onMainMenuItemSelect} onGoBackSelect={onGoBackMenuItemSelect} onStockSelect={onStockSelect} stock={stock}></StockComponent>}
-		</section>
-    </div>
+  <section className='bg-blue-700 h-10 flex'>
+    <h5 className="text-white flex items-center">LSEG chatbot</h5>
+  </section>
+  <p>Welcome to LSEG. I'm here to help you.</p>
+
+  <section className="flex flex-col">
+    {tables.map((table) => (
+      <div key={table.tableKey}>
+        {/* Render the TableComponent */}
+        <TableComponent
+          onStockExchange={(code) => onStockExchangeSelect(code, table.tableKey)}
+          stockExchanges={stockExchanges}
+          isClickable={table.isClickable}
+        />
+        
+        {/* Render stock exchange name */}
+        {table.stockExchangeName && (
+          <h3 className="flex justify-end">{table.stockExchangeName}</h3>
+        )}
+
+        {/* Render the StocksComponent if stockExchangeName exists */}
+        {table.stockExchangeName && (
+          <StocksComponent
+            onMainMenuSelect={addTable}
+            onGoBackSelect={() => onGoBackMenuItemSelect(table.tableKey)}
+            onStockSelect={(stock) => onStockSelect(stock, table.tableKey)}
+            stocks={table.stocks}
+            isClickable={table.isClickable}
+            tableKey={table.tableKey}
+          />
+        )}
+
+        {/* Render the selected stock */}
+        {table.selectedStock && (
+          <h3 className="flex justify-end">{table.selectedStock}</h3>
+        )}
+
+        {/* Render the StockComponent if stock exists */}
+        {table.stock && (
+          <StockComponent
+            onMainMenuSelect={addTable}
+            onGoBackSelect={() => onGoBackMenuItemSelect(table.tableKey)}
+            onStockSelect={(stock) => onStockSelect(stock, table.tableKey)}
+            stock={table.stock}
+          />
+        )}
+      </div>
+    ))}
+  </section>
+</div>
   );
 }
 

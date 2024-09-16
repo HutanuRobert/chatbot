@@ -17,6 +17,7 @@ interface stockProps {
 }
 
 export default function StockComponent(props: stockProps) {
+	console.log(props.stock);
 	return(
   <div data-testid="stocks">
 	<TableContainer component={Paper}>
