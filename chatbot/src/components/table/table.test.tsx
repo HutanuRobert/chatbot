@@ -13,7 +13,7 @@ const stockExchanges: StockExchange[] = [
 ];
 describe('<table />', () => {
   test('it should mount', () => {
-    render(<TableComponent stockExchanges={stockExchanges}/>);
+    render(<TableComponent onStockExchange={() => {}} stockExchanges={stockExchanges} isClickable={true}/>);
 
     const table = screen.getByTestId('table');
 

@@ -11,16 +11,17 @@ import { StockExchange } from '../../types/stockExchange';
 
 interface tableProps {
 stockExchanges: StockExchange[] | undefined;
+onStockExchange: (code: string) => void;
+isClickable: boolean;
 }
 
 export default function TableComponent(props: tableProps) {
-	console.log(props.stockExchanges);
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ height: 200, width: 200 }} aria-label="simple table">
+      <Table sx={{ height: 200, width: 250 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className='bg-blue-100' sx={{justifyContent : 'center', display: 'flex'}}>Dessert (100g serving)</TableCell>
+            <TableCell className='bg-blue-100' sx={{justifyContent : 'center', display: 'flex'}}>Please select a stock exchange</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -29,10 +30,10 @@ export default function TableComponent(props: tableProps) {
               key={row.stockExchange}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row" sx={{justifyContent : 'center', display: 'flex'}}>
+              <TableCell component="th" scope="row" onClick={() => props.isClickable ?  props.onStockExchange(row.code) : undefined} sx={{justifyContent : 'center', display: 'flex'}}>
                 {row.stockExchange}
               </TableCell>
-            </TableRow>
+            </TableRow>			
           ))}
         </TableBody>
       </Table>
