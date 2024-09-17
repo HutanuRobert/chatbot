@@ -20,8 +20,8 @@ export default function StockComponent(props: stockProps) {
 	console.log(props.stock);
 	return(
   <div data-testid="stocks">
-	<TableContainer component={Paper}>
-   <Table sx={{ height: 200, width: 250 }} aria-label="simple table">
+	<TableContainer sx={{width: "75%"}} component={Paper}>
+   <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell className='bg-blue-100' sx={{justifyContent : 'center', display: 'flex'}}> <p>{props?.stock?.stockName} is currently trading at {props?.stock?.price}</p></TableCell>

@@ -1,39 +1,19 @@
-// src/context/TableContext.tsx
 import React, { createContext, useContext, useState } from 'react';
 import { Stock } from '../../types/stock';
+import { ChatBotContextType, ChatbotState } from '../../types/chatbotState';
 
-// Define the structure of the table state
-interface TableState {
-  tableKey: number;
-  stocks: Stock[] | null;
-  stockExchangeName: string | null;
-  selectedStock: string | null;
-  stock: Stock | null;
-  isClickable: boolean;
-}
-
-// Define the context value
-interface TableContextType {
-  tables: TableState[];
-  addTable: () => void;
-  updateStockExchange: (tableKey: number, stockExchangeName: string, stocks: Stock[] | null) => void;
-  updateStock: (tableKey: number, stock: Stock) => void;
-  goBack: (tableKey: number) => void;
-}
-
-const TableContext = createContext<TableContextType | undefined>(undefined);
+const chatbotContext = createContext<ChatBotContextType | undefined>(undefined);
 
 export const useTableContext = () => {
-  const context = useContext(TableContext);
+  const context = useContext(chatbotContext);
   if (!context) {
-    throw new Error('useTableContext must be used within a TableProvider');
+    throw new Error('chatbotContext must be used within a ChatbotStateProvider');
   }
   return context;
 };
 
-// Create a provider component to wrap your app
 export default function ChatBotStateProvider({ children }: { children: React.ReactNode }) {
-  const [tables, setTables] = useState<TableState[]>([
+  const [tables, setTables] = useState<ChatbotState[]>([
     {
       tableKey: 0,
       stocks: null,
@@ -41,11 +21,11 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
       selectedStock: null,
       stock: null,
       isClickable: true,
+	  stockExchangeVisible: true,
     },
   ]);
 
-  // Function to add a new table
-  const addTable = () => {
+  const addSession = () => {
     const newTableKey = tables.length;
     setTables([
       ...tables,
@@ -56,11 +36,11 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
         selectedStock: null,
         stock: null,
         isClickable: true,
+		stockExchangeVisible: true,
       },
     ]);
   };
 
-  // Function to update stock exchange info
   const updateStockExchange = (tableKey: number, stockExchangeName: string, stocks: Stock[] | null) => {
     setTables((prevTables) =>
       prevTables.map((table) =>
@@ -71,7 +51,6 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
     );
   };
 
-  // Function to update selected stock
   const updateStock = (tableKey: number, stock: Stock) => {
     setTables((prevTables) =>
       prevTables.map((table) =>
@@ -80,15 +59,14 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
     );
   };
   
-  // Function to go back to the previous screen
   const goBack = (tableKey: number) => {
   setTables((prevTables) =>
     prevTables.map((table) => {
       if (table.tableKey === tableKey) {
         if (table.selectedStock) {
-          setTables([...tables,{ selectedStock: null, stock: null, isClickable: true, stockExchangeName: table.stockExchangeName, tableKey: tables.length, stocks: table.stocks} ]);
-        } else if (table.stocks) {
-		    setTables([...tables,{ selectedStock: null, stock: null, isClickable: true, stockExchangeName: null, tableKey: tables.length, stocks: null} ]);
+          setTables([...tables,{ selectedStock: null, stock: null, isClickable: true, stockExchangeVisible: false, stockExchangeName: table.stockExchangeName, tableKey: tables.length, stocks: table.stocks} ]);
+        } else  {
+		    setTables([...tables,{ selectedStock: null, stock: null, isClickable: true, stockExchangeVisible: true, stockExchangeName: null, tableKey: tables.length, stocks: null} ]);
         }
       }
       return table;
@@ -97,8 +75,8 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
 };
 
   return (
-      <TableContext.Provider value={{ tables, addTable, updateStockExchange, updateStock, goBack }}>
+      <chatbotContext.Provider value={{ tables, addSession, updateStockExchange, updateStock, goBack }}>
         {children}
-      </TableContext.Provider>
+      </chatbotContext.Provider>
     );
 };

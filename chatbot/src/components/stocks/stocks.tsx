@@ -19,11 +19,10 @@ interface stocksProps {
 }
 
 export default function StocksComponent(props: stocksProps) {
-	console.log(props.stocks);
 	return(
   <div data-testid="stocks">
-	<TableContainer component={Paper}>
-   <Table sx={{ height: 200, width: 250 }} aria-label="simple table">
+	<TableContainer sx={{width: "75%"}} component={Paper}>
+   <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell className='bg-blue-100' sx={{justifyContent : 'center', display: 'flex'}}>Please select a Stock</TableCell>
