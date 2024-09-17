@@ -1,5 +1,3 @@
-
-
 interface noDataProps {}
 
 export default function NoDataComponent(props: noDataProps) {

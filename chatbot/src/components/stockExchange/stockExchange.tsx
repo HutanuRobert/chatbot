@@ -26,10 +26,7 @@ export default function StockExchangeComponent(props: tableProps) {
         </TableHead>
         <TableBody>
           {props.stockExchanges?.map((row) => (
-            <TableRow
-              key={row.stockExchange}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={row.stockExchange}>
               <TableCell component="th" scope="row" onClick={() => props.isClickable ?  props.onStockExchange(row.code) : undefined} sx={{justifyContent : 'center', display: 'flex'}}>
                 {row.stockExchange}
               </TableCell>

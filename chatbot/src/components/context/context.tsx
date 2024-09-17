@@ -18,7 +18,6 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
       tableKey: 0,
       stocks: null,
       stockExchangeName: null,
-      selectedStock: null,
       stock: null,
 	  stockExchangeVisible: true,
     },
@@ -32,7 +31,6 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
         tableKey: newTableKey,
         stocks: null,
         stockExchangeName: null,
-        selectedStock: null,
         stock: null,
 		stockExchangeVisible: true,
       },
@@ -61,10 +59,10 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
   setTables((prevTables) =>
     prevTables.map((table) => {
       if (table.tableKey === tableKey) {
-        if (table.selectedStock) {
-          setTables([...tables,{ selectedStock: null, stock: null, stockExchangeVisible: false, stockExchangeName: "Go Back", tableKey: tables.length, stocks: table.stocks} ]);
+        if (table.stock) {
+          setTables([...tables,{ stock: null, stockExchangeVisible: false, stockExchangeName: "Go Back", tableKey: tables.length, stocks: table.stocks} ]);
         } else  {
-		    setTables([...tables,{ selectedStock: null, stock: null, stockExchangeVisible: true, stockExchangeName: null, tableKey: tables.length, stocks: null} ]);
+		    setTables([...tables,{ stock: null, stockExchangeVisible: true, stockExchangeName: null, tableKey: tables.length, stocks: null} ]);
         }
       }
       return table;

@@ -10,7 +10,7 @@ import { Stock } from '../../types/stock';
 
 
 interface stocksProps {
-	 tableKey: number;
+	tableKey: number;
 	stocks : Stock[] | null;
 	onStockSelect: (stock: Stock,tableKey: number) => void;
 	isClickable: boolean;
@@ -30,10 +30,7 @@ export default function StocksComponent(props: stocksProps) {
         </TableHead>
         <TableBody>
           {props.stocks?.map((row) => (
-            <TableRow
-              key={row.code}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={row.code}>
               <TableCell component="th" scope="row" onClick={() => props.isClickable ?  props.onStockSelect(row, props.tableKey): undefined } sx={{justifyContent : 'center', display: 'flex'}}>
                 {row.stockName}
               </TableCell>
