@@ -15,7 +15,7 @@ onStockExchange: (code: string) => void;
 isClickable: boolean;
 }
 
-export default function TableComponent(props: tableProps) {
+export default function StockExchangeComponent(props: tableProps) {
   return (
     <TableContainer sx={{width: "75%"}} component={Paper}>
       <Table  aria-label="simple table">

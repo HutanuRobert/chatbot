@@ -34,18 +34,18 @@ export default function StocksComponent(props: stocksProps) {
               key={row.code}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row" onClick={() =>  props.onStockSelect(row, props.tableKey)} sx={{justifyContent : 'center', display: 'flex'}}>
+              <TableCell component="th" scope="row" onClick={() => props.isClickable ?  props.onStockSelect(row, props.tableKey): undefined } sx={{justifyContent : 'center', display: 'flex'}}>
                 {row.stockName}
               </TableCell>
             </TableRow>
           ))}
 		 <TableRow>
-			<TableCell onClick={() =>props.onMainMenuSelect() } sx={{justifyContent : 'center', display: 'flex'}}>
+			<TableCell onClick={() => props.isClickable ? props.onMainMenuSelect() : undefined } sx={{justifyContent : 'center', display: 'flex'}}>
 		  		<p>Main Menu</p>
 			</TableCell>
 		   </TableRow>
 		   <TableRow>
- 			<TableCell onClick={() =>props.onGoBackSelect() } sx={{justifyContent : 'center', display: 'flex'}}>
+ 			<TableCell onClick={() => props.isClickable ? props.onGoBackSelect() : undefined } sx={{justifyContent : 'center', display: 'flex'}}>
 		  		<p>Go back</p>
 			</TableCell>
 		   </TableRow>

@@ -11,13 +11,12 @@ import { Stock } from '../../types/stock';
 
 interface stockProps {
 	stock : Stock | null;
-	onStockSelect: (stock: Stock) => void;
 	onGoBackSelect: () => void;
 	onMainMenuSelect: () => void;
+	isClickable: boolean;
 }
 
 export default function StockComponent(props: stockProps) {
-	console.log(props.stock);
 	return(
   <div data-testid="stocks">
 	<TableContainer sx={{width: "75%"}} component={Paper}>
@@ -29,12 +28,12 @@ export default function StockComponent(props: stockProps) {
         </TableHead>
         <TableBody>
 		   <TableRow>
-			<TableCell onClick={() => props.onMainMenuSelect()} sx={{justifyContent : 'center', display: 'flex'}}>
+			<TableCell onClick={() => props.isClickable ? props.onMainMenuSelect() : undefined} sx={{justifyContent : 'center', display: 'flex'}}>
 		  		<p>Main Menu</p>
 			</TableCell>
 		   </TableRow>
 		   <TableRow>
- 			<TableCell onClick={() => props.onGoBackSelect()} sx={{justifyContent : 'center', display: 'flex'}}>
+ 			<TableCell onClick={() => props.isClickable ? props.onGoBackSelect() : undefined} sx={{justifyContent : 'center', display: 'flex'}}>
 		  		<p>Go back</p>
 			</TableCell>
 		   </TableRow>
