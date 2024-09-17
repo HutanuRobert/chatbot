@@ -4,7 +4,6 @@ export interface ChatbotState {
   tableKey: number;
   stocks: Stock[] | null;
   stockExchangeName: string | null;
-  selectedStock: string | null;
   stock: Stock | null;
   stockExchangeVisible: boolean;
 }

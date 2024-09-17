@@ -1,6 +1,6 @@
 import './index.css';
 import './App.css';
-import StockExchangeComponent from './components/table/stockExchange';
+import StockExchangeComponent from './components/stockExchange/stockExchange';
 import { GetStockExchanges } from './api/getStockExchanges';
 import StocksComponent from './components/stocks/stocks';
 import { Stock } from './types/stock';
@@ -45,7 +45,7 @@ function App() {
 
       <section className="flex flex-col p-2 overflow-y-auto" ref={containerRef}>
         {stockExchanges?.length === 0 || stockExchanges === undefined? (
-          <NoDataComponent />  // Render the NoDataComponent if no stock exchanges are available
+          <NoDataComponent />  
         ) : (
           tables.map((table) => (
             <div key={table.tableKey}>
@@ -67,13 +67,13 @@ function App() {
                   onGoBackSelect={() => onGoBackMenuItemSelect(table.tableKey)}
                   onStockSelect={(stock) => onStockSelect(stock, table.tableKey)}
                   stocks={table.stocks}
-                  isClickable={table.selectedStock == null && lastTableKey === table.tableKey}
+                  isClickable={table.stock == null && lastTableKey === table.tableKey}
                   tableKey={table.tableKey}
                 />
               )}
-              {table.selectedStock && (
+              {table.stock?.stockName && (
                 <div className='flex justify-end rounded-lg'>
-                  <h3 className="bg-gray-400 rounded-lg p-3">{table.selectedStock}</h3>
+                  <h3 className="bg-gray-400 rounded-lg p-3">{table.stock?.stockName}</h3>
                 </div>
               )}
               {table.stock && (
