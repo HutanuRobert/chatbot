@@ -1,6 +1,6 @@
 import './index.css';
 import './App.css';
-import TableComponent from './components/table/table.component';
+import StockExchangeComponent from './components/table/stockExchange';
 import { GetStockExchanges } from './api/getStockExchanges';
 import StocksComponent from './components/stocks/stocks';
 import { Stock } from './types/stock';
@@ -12,7 +12,10 @@ import { useEffect, useRef } from 'react';
 
 function App() {
 	const { tables, addSession, updateStockExchange, updateStock, goBack } = useTableContext();
+	const containerRef = useRef<HTMLDivElement | null>(null);
 	const stockExchanges = GetStockExchanges().data;
+	const lastTableKey = tables.length > 0 ? tables[tables.length - 1].tableKey : null;
+
    const onStockExchangeSelect = (code: string, tableKey: number) => {
     const stockExchange = stockExchanges?.find((el) => el.code === code);
     updateStockExchange(tableKey, stockExchange?.stockExchange || '', stockExchange?.topStocks || null);
@@ -26,7 +29,6 @@ function App() {
     goBack(tableKey);
   };
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -45,23 +47,23 @@ function App() {
   <section className="flex flex-col p-2 overflow-y-auto" ref={containerRef}>
     {tables.map((table) => (
       <div key={table.tableKey}>
-        {table.stockExchangeVisible && (<TableComponent
+        {table.stockExchangeVisible && (<StockExchangeComponent
           onStockExchange={(code) => onStockExchangeSelect(code, table.tableKey)}
           stockExchanges={stockExchanges}
-          isClickable={table.isClickable}
+          isClickable={table.stockExchangeName == null && lastTableKey === table.tableKey}
         />)}
         {table.stockExchangeName && (
 			<div className='flex justify-end'>
 				<h3 className="bg-gray-400 rounded-lg p-3">{table.stockExchangeName}</h3>
 			</div>
         )}
-        {table.stockExchangeName && (
+        {table.stock && (
           <StocksComponent
             onMainMenuSelect={addSession}
             onGoBackSelect={() => onGoBackMenuItemSelect(table.tableKey)}
             onStockSelect={(stock) => onStockSelect(stock, table.tableKey)}
             stocks={table.stocks}
-            isClickable={table.isClickable}
+            isClickable={table.selectedStock == null && lastTableKey === table.tableKey}
             tableKey={table.tableKey}
           />
         )}
@@ -75,8 +77,8 @@ function App() {
           <StockComponent
             onMainMenuSelect={addSession}
             onGoBackSelect={() => onGoBackMenuItemSelect(table.tableKey)}
-            onStockSelect={(stock) => onStockSelect(stock, table.tableKey)}
             stock={table.stock}
+			isClickable={lastTableKey === table.tableKey}
           />
         )}
       </div>

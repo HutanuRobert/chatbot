@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import TableComponent from './table.component';
+import StockExchangeComponent from './stockExchange';
 import { StockExchange } from '../../types/stockExchange';
 
 const stockExchanges: StockExchange[] = [
@@ -13,7 +13,7 @@ const stockExchanges: StockExchange[] = [
 ];
 describe('<table />', () => {
   test('it should mount', () => {
-    render(<TableComponent onStockExchange={() => {}} stockExchanges={stockExchanges} isClickable={true}/>);
+    render(<StockExchangeComponent onStockExchange={() => {}} stockExchanges={stockExchanges} isClickable={true}/>);
 
     const table = screen.getByTestId('table');
 

@@ -6,7 +6,6 @@ export interface ChatbotState {
   stockExchangeName: string | null;
   selectedStock: string | null;
   stock: Stock | null;
-  isClickable: boolean;
   stockExchangeVisible: boolean;
 }
 

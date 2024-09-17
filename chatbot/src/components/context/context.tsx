@@ -20,7 +20,6 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
       stockExchangeName: null,
       selectedStock: null,
       stock: null,
-      isClickable: true,
 	  stockExchangeVisible: true,
     },
   ]);
@@ -35,7 +34,6 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
         stockExchangeName: null,
         selectedStock: null,
         stock: null,
-        isClickable: true,
 		stockExchangeVisible: true,
       },
     ]);
@@ -45,7 +43,7 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
     setTables((prevTables) =>
       prevTables.map((table) =>
         table.tableKey === tableKey
-          ? { ...table, stockExchangeName, stocks, isClickable: false }
+          ? { ...table, stockExchangeName, stocks, tableKey: tableKey, isClickable: false }
           : table
       )
     );
@@ -54,7 +52,7 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
   const updateStock = (tableKey: number, stock: Stock) => {
     setTables((prevTables) =>
       prevTables.map((table) =>
-        table.tableKey === tableKey ? { ...table, stock, selectedStock: stock.stockName, isClickable:false } : table
+        table.tableKey === tableKey ? { ...table, stock, selectedStock: stock.stockName, tableKey: tableKey } : table
       )
     );
   };
@@ -64,9 +62,9 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
     prevTables.map((table) => {
       if (table.tableKey === tableKey) {
         if (table.selectedStock) {
-          setTables([...tables,{ selectedStock: null, stock: null, isClickable: true, stockExchangeVisible: false, stockExchangeName: table.stockExchangeName, tableKey: tables.length, stocks: table.stocks} ]);
+          setTables([...tables,{ selectedStock: null, stock: null, stockExchangeVisible: false, stockExchangeName: "Go Back", tableKey: tables.length, stocks: table.stocks} ]);
         } else  {
-		    setTables([...tables,{ selectedStock: null, stock: null, isClickable: true, stockExchangeVisible: true, stockExchangeName: null, tableKey: tables.length, stocks: null} ]);
+		    setTables([...tables,{ selectedStock: null, stock: null, stockExchangeVisible: true, stockExchangeName: null, tableKey: tables.length, stocks: null} ]);
         }
       }
       return table;
