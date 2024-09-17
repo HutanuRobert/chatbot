@@ -10,19 +10,19 @@ import { Stock } from '../../types/stock';
 
 
 interface stocksProps {
+	 tableKey: number;
 	stocks : Stock[] | null;
-	onStockSelect: (stock: Stock) => void;
+	onStockSelect: (stock: Stock,tableKey: number) => void;
 	isClickable: boolean;
 	onGoBackSelect: () => void;
 	onMainMenuSelect: () => void;
 }
 
 export default function StocksComponent(props: stocksProps) {
-	console.log(props.stocks);
 	return(
   <div data-testid="stocks">
-	<TableContainer component={Paper}>
-   <Table sx={{ height: 200, width: 250 }} aria-label="simple table">
+	<TableContainer sx={{width: "75%"}} component={Paper}>
+   <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell className='bg-blue-100' sx={{justifyContent : 'center', display: 'flex'}}>Please select a Stock</TableCell>
@@ -34,7 +34,7 @@ export default function StocksComponent(props: stocksProps) {
               key={row.code}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row" onClick={() => props.isClickable ?  props.onStockSelect(row) : undefined} sx={{justifyContent : 'center', display: 'flex'}}>
+              <TableCell component="th" scope="row" onClick={() =>  props.onStockSelect(row, props.tableKey)} sx={{justifyContent : 'center', display: 'flex'}}>
                 {row.stockName}
               </TableCell>
             </TableRow>

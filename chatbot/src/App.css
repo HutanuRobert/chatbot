@@ -1,4 +1,8 @@
 .App {
   display: flex;
   flex-direction: column;
+  height: 80vh;
+  max-height: 80vh;
+  margin:50px;
+  border: 2px solid blue
 }

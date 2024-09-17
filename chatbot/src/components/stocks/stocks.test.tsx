@@ -5,7 +5,7 @@ import Stocks from './stocks';
 
 describe('<stocks />', () => {
   test('it should mount', () => {
-    render(<Stocks  onMainMenuSelect={() => {}} onGoBackSelect={() => {}} onStockSelect={() => {}} stocks={[]} isClickable={true}/>);
+    render(<Stocks  tableKey={1} onMainMenuSelect={() => {}} onGoBackSelect={() => {}} onStockSelect={() => {}} stocks={[]} isClickable={true}/>);
 
     const stocks = screen.getByTestId('stocks');
 

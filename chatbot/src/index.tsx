@@ -5,9 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { worker } from './mocks/browser';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import ChatBotStateProvider from './components/context/context';
 
 worker.start()
-
 
 const queryClient = new QueryClient()
 
@@ -15,11 +15,13 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+<React.StrictMode>
 	<QueryClientProvider client={queryClient}>
-    <App />
+		<ChatBotStateProvider>
+			<App />
+		</ChatBotStateProvider>
 	</QueryClientProvider>
-  </React.StrictMode>
+</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
