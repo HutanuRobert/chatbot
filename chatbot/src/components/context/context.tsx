@@ -54,7 +54,7 @@ export default function ChatBotStateProvider({ children }: { children: React.Rea
   const updateStock = (tableKey: number, stock: Stock) => {
     setTables((prevTables) =>
       prevTables.map((table) =>
-        table.tableKey === tableKey ? { ...table, stock, selectedStock: stock.stockName, isClickable:true } : table
+        table.tableKey === tableKey ? { ...table, stock, selectedStock: stock.stockName, isClickable:false } : table
       )
     );
   };
